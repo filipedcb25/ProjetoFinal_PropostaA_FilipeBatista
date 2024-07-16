@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Selecionar Veículo</title>
+    <style>
+        body {
+            font-family: 'Crimson Text', serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #555;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Selecionar Veículo</h2>
+    <form action="/selecionar_veiculo" method="post">
+        <input type="hidden" name="data_inicio" value="{{ data_inicio }}">
+        <input type="hidden" name="data_final" value="{{ data_final }}">
+
+        <table>
+            <tr>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Tipo</th>
+                <th>Selecionar</th>
+            </tr>
+            {% for veiculo in veiculos %}
+            <tr>
+                <td>{{ veiculo.Marca }}</td>
+                <td>{{ veiculo.Modelo }}</td>
+                <td>{{ veiculo.Tipo }}</td>
+                <td><input type="radio" name="veiculo_id" value="{{ veiculo.ID }}" required></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <button type="submit">Selecionar Datas</button>
+    </form>
+</body>
+</html>

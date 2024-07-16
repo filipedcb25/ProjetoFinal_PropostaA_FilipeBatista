@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registo do utilizador</title>
+
+    <!-- Importação do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <!-- Ligação com o CSS -->
+    <link rel = "stylesheet" href = "{{url_for ('static', filename = 'main.css')}}">
+ <style>
+     input[type="text"],
+     input[type="email"],
+     select {
+        width: 120%;
+        margin-bottom: 15px;
+        padding: 13px;
+        box-sizing: border-box;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+     }
+     h2 {
+        font-size: 28px;
+        margin: 20px 0;
+        color: #555;
+        }
+
+     body {
+     font-family: 'Crimson Text', serif;
+     text-align: center;
+     background-color: #f4f4f4;
+     }
+
+
+     button[type="submit"]{
+        width: 150px;
+        height: 40px;
+        font-size: 21px;
+     }
+
+       .main {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .logo {
+            margin-top: 50px;
+            max-width: 736px;
+            height: 127px;
+            width: 127px;
+        }
+
+        .flash-error {
+            border: 2px black;
+            padding: 10px;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+<body>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category == 'error' %}
+                    <div class="flash-error">
+                        {{ message }}
+                    </div>
+                {% else %}
+                    <div class="flash-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+<div class="main">
+    <img src="https://i.pinimg.com/736x/84/e7/b3/84e7b33d4ead8cfab4f230f95ba27ae1.jpg" class="logo" alt="Luxury Wheels Logo">
+    <h3>Primeiro, precisamos de alguns dados:</h3>
+    <br>
+    <form action="/registar_user" method = "post">
+        <label for = "primeiro_nome">
+            Primeiro nome:
+            <br>
+        </label>
+        <input type = "text"
+               id = "primeiro_nome"
+               name = "primeiro_nome"
+        placeholder="Introduza o seu primeiro nome: " required>
+        <br>
+        <br>
+        <label for="apelido">
+            Último nome:
+            <br>
+        </label>
+        <input type="text"
+                id="apelido"
+                name = "apelido"
+        placeholder="Introduza o seu apelido: " required>
+        <br>
+        <br>
+        <label for="email">
+            Email:
+            <br>
+        </label>
+        <input type="email"
+                id="email"
+                name="email"
+        placeholder="Introduza o seu e-mail:" required>
+        <br>
+        <br>
+        <div class = "wrap">
+        <button type="submit" onclick="solve()">
+            Avançar
+        </button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

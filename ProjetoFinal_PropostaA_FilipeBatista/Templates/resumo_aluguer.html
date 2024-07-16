@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resumo do Aluguer</title>
+<style>
+    body {
+        font-family: 'Crimson Text', serif;
+        background-color: #f4f4f4;
+    }
+    .card-box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 415px;
+        height: 480px;
+        border-radius: 5px;
+        padding: 40px 30px;
+        background: #fff;
+        box-shadow: 10px 10px 15px #eaeaea, -10px -10px 15px #eaeaea;
+    }
+    .card-box .card-title h3 {
+        font-size: 24px;
+        text-align: center;
+        margin: 0 0 15px;
+    }
+    .card-box .card {
+        align-items: left;
+        display: flex;
+        flex-direction: column;
+    }
+    .card-box .card span {
+        font-size: 18px;
+        font-weight: 400;
+        margin-bottom: 20px;
+    }
+    a {
+        text-decoration: none;;
+        color: #007BFF;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    button {
+        padding: 8px 12px;
+        font-size: 15px;
+        color: white;
+        background-color: #007BFF;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    hr{
+        margin: 2em auto;
+        height: 2px;
+        background-color: black;
+        border: none;
+    }
+
+    p{
+      font-size: 18px;
+      margin: 5px;
+      padding: 5px;
+    }
+
+    .vertical-center {
+      margin: 10;
+      position: absolute;
+      top: 90%;
+      left: 40%;
+      -ms-transform: translateY(-50%);
+      transform: translateY(-60%);
+    }
+
+    .espaco{
+    margin-left: 10px;
+    }
+</style>
+</head>
+<body>
+<div class = "card-box">
+    <div class = "card-title">
+        <h3>Resumo do Aluguer</h3>
+        <hr>
+        <div class = "card">
+            <p>Primeiro nome: <span class = "espaco">{{ primeiro_nome }}</span></p>
+            <p>Apelido: <span class = "espaco"> {{ apelido }}</span></p>
+            <p>E-mail: <span class = "espaco" >{{ email }}</span></p>
+            <p>Veículo Selecionado:<span class = "espaco">{{ marca }} {{ modelo }}</span></p>
+            <p>Data de Início do Aluguer: <span class = "espaco">{{ data_inicio }}</span></p>
+            <p>Data do Fim do Aluguer: <span class = "espaco">{{ data_final }}</span></p>
+            <p>Método de pagamento: <span class = "espaco">{{ payment }}</span></p>
+            <p>Valor a Pagar: <span class = "espaco">{{ valor_pagar }}</span>€</p>
+            <div class = "vertical-center">
+            <a href = "/aluguer_sucesso"><button>Alugar Veículo</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

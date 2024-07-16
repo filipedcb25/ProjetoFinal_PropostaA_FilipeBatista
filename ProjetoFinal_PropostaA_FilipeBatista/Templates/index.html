@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+
+    <!-- Importação do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <!-- Ligação com o CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+
+    <style>
+        body {
+            font-family: 'Crimson Text', serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-top: 50px;
+            color: #333;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #555;
+        }
+        h3 {
+            font-size: 18px;
+            margin: 15px;
+            color: #555;
+        }
+
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .logo {
+            margin-top: 50px;
+            max-width: 736px;
+            height: 127px;
+            width: 127px;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://i.pinimg.com/736x/84/e7/b3/84e7b33d4ead8cfab4f230f95ba27ae1.jpg" class="logo" alt="Luxury Wheels Logo">
+    <h1>Luxury Wheels</h1>
+    <h2>Temos diversos veículos para todos os gostos.</h2>
+    <br>
+    <p></p>
+    <h3><a href="/registar_user">Registar Utilizador</a></h3>
+</body>
+</html>
