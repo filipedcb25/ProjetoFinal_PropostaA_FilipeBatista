@@ -5,7 +5,7 @@ import sqlite3
 import random as r
 
 
-class Veiculo:
+class Veiculo: # Criação da classe veículo com os parâmetros que vão ser usados na DB
     def __init__(self,id=None, marca=None, modelo=None, categoria=None, transmissao=None, tipo=None, quantidade=None, valor_diaria=None, data_proxima_revisao=None, data_ultima_revisao=None, data_ultima_inspecao=None, is_alugado=0):
         self.id = id
         self.marca = marca
@@ -20,7 +20,7 @@ class Veiculo:
         self.data_ultima_inspecao = data_ultima_inspecao
         self.is_alugado = is_alugado
 
-        # Gerar datas aleatórias
+        # Gerar datas aleatórias para as revisões e inspeções dos veículos
         def data_aleatoria(start_date, end_date):
             delta = end_date - start_date
             random_days = r.randint(0, delta.days)
@@ -34,7 +34,7 @@ class Veiculo:
         self.data_proxima_revisao = self.data_ultima_revisao + timedelta(days=r.randint(365, 365 * 2))
         self.data_ultima_inspecao = data_aleatoria(data_inicial, data_final)
 
-    def get_veiculo(self):
+    def get_veiculo(self): # função para ir buscar os veículos e juntar a uma lista
         with sqlite3.connect('Database/veiculos.db') as con_veiculo:
             con_veiculo.row_factory = sqlite3.Row
             cursor_veiculo = con_veiculo.cursor()
@@ -113,20 +113,20 @@ class Veiculo:
             print("Erro: ", error)
 
 
-class User:
+class User: # criação da classe User com os parâmetros que vão ser usados na DB
     def __init__(self, primeiro_nome, apelido, email):
         self.primeiro_nome = primeiro_nome
         self.apelido = apelido
         self.email = email
 
-    def verificar_credenciais(self):
+    def verificar_credenciais(self): # Função para verificar se o email já se encontra presente na DB
         with sqlite3.connect('Database/users.db') as con_user:
             con_user.row_factory = sqlite3.Row
             cursor_user = con_user.cursor()
             cursor_user.execute("SELECT * FROM User WHERE email = ?", (self.email,))
             return cursor_user.fetchone() is not None
 
-    def criar_user(self):
+    def criar_user(self): # Se o email não estiver na DB, criar um novo User
         if self.verificar_credenciais():
             return False,"Este email já existe"
 
@@ -139,7 +139,7 @@ class User:
             con_user.commit()
             return True, "Utilizador criado com sucesso."
 
-    def atualizar_user(self):
+    def atualizar_user(self): # Função para atualizar caso não exista esse User
         try:
             with sqlite3.connect('Database/users.db') as con_user:
                 con_user.row_factory = sqlite3.Row
@@ -184,16 +184,15 @@ app.secret_key = "flask_cookie_secret_key"
 def homepage():
     return render_template("index.html")
 
-# Obter os veículos que estão na base de dados com base no tipo: Carro, Mota ou SUV
 @app.route('/registar_user', methods=['GET', 'POST'])
 def registar_user():
     if request.method == 'GET':
         return render_template('registo_user.html')
-    elif request.method == 'POST':
+    elif request.method == 'POST': # Requisitar os dados do User
         primeiro_nome = request.form['primeiro_nome']
         apelido = request.form['apelido']
         email = request.form['email']
-
+        # Armazenar na sessão através de cookies
         session['primeiro_nome'] = primeiro_nome
         session['apelido'] = apelido
         session['email'] = email
@@ -253,23 +252,20 @@ def veiculo_alugado(veiculo_id):
             cursor_veiculo = con_veiculo.cursor()
             cursor_veiculo.execute("UPDATE veiculo SET is_alugado = 1 WHERE ID = ?", (veiculo_id,))
             con_veiculo.commit()
-
     except sqlite3.Error as e:
         print(f"Erro ao alugar o veículo: {e}")
-
-
 
 @app.route('/selecionar_veiculo', methods=['GET','POST'])
 def selecionar_veiculo():
     try:
-        if request.method == 'GET':
+        if request.method == 'GET': # Obter os veículos que estão na base de dados com base no tipo: Carro, Mota ou SUV
             tipo = request.args.get('tipo')
             veiculos = get_veiculos_by_tipo(tipo) if tipo else get_all_veiculos()
             return render_template('selecionar_veiculo.html', veiculos=veiculos, tipo=tipo)
 
         elif request.method == 'POST':
-            veiculo_id = request.form.get('veiculo_id')
-            session['veiculo_id'] = veiculo_id
+            veiculo_id = request.form.get('veiculo_id') # Requisitar qual o veículo pretendido
+            session['veiculo_id'] = veiculo_id # Armazenar a escolha através de cookies
             return redirect(url_for('alugar_veiculo', veiculo_id=veiculo_id))
 
     except Exception as e:
@@ -280,10 +276,10 @@ def alugar_veiculo():
         veiculo_id = session.get('veiculo_id')
 
         if request.method == 'POST':
-            data_inicio = request.form.get('data_inicio')
-            data_final = request.form.get('data_final')
-            session['data_inicio'] = data_inicio
-            session['data_final'] = data_final
+            data_inicio = request.form.get('data_inicio') #Requisição da data inicial
+            data_final = request.form.get('data_final') #Requisição da data final
+            session['data_inicio'] = data_inicio #Armazenamento na sessão através de cookies
+            session['data_final'] = data_final #Armazenamento na sessão através de cookies
 
             return redirect(url_for('pagamento', veiculo_id=veiculo_id, data_inicio=data_inicio, data_final=data_final))
         return render_template('alugar_veiculo.html', veiculo_id=veiculo_id)
@@ -297,14 +293,15 @@ def pagamento():
     if request.method == 'GET':
         return render_template('pagamento.html')
     if request.method == 'POST':
-        payment = request.form.get('payment')
-        session['payment'] = payment
+        payment = request.form.get('payment') # Requisição do método de pagamento
+        session['payment'] = payment # Armazenamento através de cookies
 
         print(f"Selecionou {payment} como método de pagamento.")
         return redirect(url_for('resumo_aluguer', payment=payment))
 @app.route('/resumo_aluguer', methods = ['GET'])
 def resumo_aluguer():
-    try:
+    try: # Passagem de todos os parâmetros que foram recolhidos para a página final
+        # Fazer o display de tudo para o cliente rever as suas opções
         primeiro_nome = session.get('primeiro_nome')
         apelido = session.get('apelido')
         email = session.get('email')
@@ -329,7 +326,7 @@ def resumo_aluguer():
             print("Por favor, selecione o método de pagamento.")
             return redirect(url_for('pagamento'))
 
-        else:
+        else: # Conversão das datas requeridas para datetime
             data_inicio = datetime.strptime(data_inicio_str, '%Y-%m-%d').date()
             data_final= datetime.strptime(data_final_str, '%Y-%m-%d').date()
             # calcular o número de dias
@@ -339,6 +336,7 @@ def resumo_aluguer():
             valor_pagar = valor_diaria * num_dias if valor_diaria is not None else 0.0
 
         veiculo = get_veiculos_by_id(veiculo_id)
+        # Fazer o display das informações requeridas em baixo
         if veiculo:
             marca = veiculo["Marca"]
             modelo = veiculo["Modelo"]
@@ -346,6 +344,7 @@ def resumo_aluguer():
             marca = "Desconhecido"
             modelo = "Desconhecido"
 
+        # Marcação do veículo selecionado como alugado
         veiculo_alugado(veiculo_id)
 
         return render_template('resumo_aluguer.html', primeiro_nome=primeiro_nome,
@@ -359,12 +358,14 @@ def resumo_aluguer():
         print(f"Erro ao finalizar o processo {e}")
         return str(e), 500
 
+# Página que termina o processo
 @app.route('/aluguer_sucesso', methods =['GET'])
 def aluguer_sucesso():
     return render_template('aluguer_sucesso.html')
 
 
-
+# Função criada para DEBUG que foi deixada como memento daquilo que se deve fazer no futuro
+# Deixada aqui para servir de exemplo em prática profissional futura
 '''debug para verificar as colunas da tabela sql:
 def verificar_tabela():
     with sqlite3.connect('Database/veiculos.db') as con_veiculo:
