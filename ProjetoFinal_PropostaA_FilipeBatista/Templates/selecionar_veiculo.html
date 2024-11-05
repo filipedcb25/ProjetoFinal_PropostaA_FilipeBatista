@@ -2,74 +2,157 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Selecionar Veículo</title>
+    <title>Filtrar e Selecionar Veículos</title>
     <style>
         body {
-            font-family: 'Crimson Text', serif;
-            text-align: center;
+            font-family: Arial, sans-serif;
             background-color: #f4f4f4;
+            display: flex;
+            margin: 0;
+            padding: 0;
         }
 
-        h2 {
-            font-size: 24px;
-            margin: 20px 0;
-            color: #555;
+        .container {
+            display: flex;
+            width: 100%;
+            padding: 20px;
         }
 
-        table {
-            margin: 0 auto;
-            border-collapse: collapse;
-            width: 80%;
+        .filtro-card {
+            width: 25%;
+            background-color: white;
+            padding: 20px;
+            margin-right: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 20px;
+            height: fit-content;
         }
 
-        th, td {
+        .filtro-card h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .filtro-card label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .filtro-card select,
+        .filtro-card button {
+            width: 100%;
             padding: 10px;
-            text-align: center;
+            margin-bottom: 15px;
+            border-radius: 5px;
             border: 1px solid #ddd;
         }
 
-        th {
-            background-color: #f2f2f2;
+        .filtro-card button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+
+        .filtro-card button:hover {
+            background-color: #0056b3;
+        }
+
+        .resultados-veiculos {
+            width: 75%;
+        }
+
+        .veiculo {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .veiculo p {
+            margin: 5px 0;
+        }
+
+        .veiculo strong {
+            font-size: 18px;
         }
 
         button {
-            background-color: #007BFF;
+            padding: 8px 12px;
+            font-size: 15px;
             color: white;
+            background-color: #007BFF;
             border: none;
-            padding: 10px 20px;
+            border-radius: 4px;
             cursor: pointer;
-            margin-top: 20px;
         }
-
         button:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <h2>Selecionar Veículo</h2>
-    <form action="/selecionar_veiculo" method="post">
-        <input type="hidden" name="data_inicio" value="{{ data_inicio }}">
-        <input type="hidden" name="data_final" value="{{ data_final }}">
+    <div class="container">
+        <!-- Card de filtro -->
+        <div class="filtro-card">
+            <h3>Filtros</h3>
+            <form method="get" action="{{ url_for('selecionar_veiculo') }}">
+                <label for="tipo">Tipo de Veículo:</label>
+                <select name="tipo" id="tipo">
+                    <option value="">Todos</option>
+                    <option value="Carro">Carro</option>
+                    <option value="SUV">SUV</option>
+                    <option value="Mota">Mota</option>
+                </select>
 
-        <table>
-            <tr>
-                <th>Marca</th>
-                <th>Modelo</th>
-                <th>Tipo</th>
-                <th>Selecionar</th>
-            </tr>
-            {% for veiculo in veiculos %}
-            <tr>
-                <td>{{ veiculo.Marca }}</td>
-                <td>{{ veiculo.Modelo }}</td>
-                <td>{{ veiculo.Tipo }}</td>
-                <td><input type="radio" name="veiculo_id" value="{{ veiculo.ID }}" required></td>
-            </tr>
+                <label for="categoria">Categoria:</label>
+                <select name="categoria" id="categoria">
+                    <option value="">Todos</option>
+                    <option value="Pequeno">Pequeno</option>
+                    <option value="Médio">Médio</option>
+                    <option value="Grande">Grande</option>
+                    <option value="Única">Única</option>
+                </select>
+
+                <label for="valor_diaria">Valor por Dia:</label>
+                <select name="valor_diaria" id="valor_diaria">
+                    <option value="">Todos</option>
+                    <option value="7">7€</option>
+                    <option value="12">12€</option>
+                    <option value="15">15€</option>
+                    <option value="16">16€</option>
+                    <option value="20">20€</option>
+                </select>
+
+                <label for="quantidade">Quantidade de Pessoas:</label>
+                <select name="quantidade" id="quantidade">
+                    <option value="">Todos</option>
+                    <option value="1">1 Pessoa</option>
+                    <option value="4">4 Pessoas</option>
+                    <option value="5">5 Pessoas</option>
+                    <option value="9">9 Pessoas</option>
+                </select>
+
+                <button type="submit">Filtrar</button>
+            </form>
+        </div>
+
+        <!-- Resultados dos veículos -->
+        <div class="resultados-veiculos">
+            {% for veiculo in veiculos_filtrados %}
+                <div class="veiculo">
+                    <p><strong>{{ veiculo.marca }} {{ veiculo.modelo }}</strong> ({{ veiculo.tipo }})</p>
+                    <p>Categoria: {{ veiculo.categoria }}</p>
+                    <p>Valor da Diária: {{ veiculo.valor_diaria }}€</p>
+                    <p>Capacidade: {{ veiculo.quantidade }} pessoas</p>
+                    <form method="post" action="{{ url_for('selecionar_veiculo') }}">
+                        <input type="hidden" name="veiculo_id" value="{{ veiculo.veiculo_id }}">
+                        <button type="submit">Selecionar Veículo</button>
+                    </form>
+                </div>
             {% endfor %}
-        </table>
-
-        <button type="submit">Selecionar Datas</button>
-    </form>
+        </div>
+    </div>
 </body>
 </html>

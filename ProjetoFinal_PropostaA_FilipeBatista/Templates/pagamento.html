@@ -10,7 +10,7 @@
             text-align: center;
             background-color: #f4f4f4;
         }
-align
+
         .card-box {
             position: absolute;
             top: 50%;
@@ -108,27 +108,31 @@ align
         </div>
         <div class="card">
             <label for="cash">
-                <input type="radio" id="cash" name="payment" value="Numerário">
+                <input type="radio" id="cash" name="pagamento" value="Numerário">
+                <input type="hidden" name="numerario">
                 <i class="fa-solid fa-money-bill-wave"></i>
                 <span>Numerário</span>
                 </label>
             <label for="paypal">
-                <input type="radio" id="paypal" name="payment" value="Paypal">
+                <input type="radio" id="paypal" name="pagamento" value="PayPal">
+                <input type="hidden" name="paypal">
                 <i class="fa-brands fa-paypal"></i>
                 <span>Paypal</span>
             </label>
             <label for="transfer">
-                <input type="radio" id="transfer" name="payment" value="Transferência Bancária">
+                <input type="radio" id="transfer" name="pagamento" value="Transferência Bancária">
+                <input type="hidden" name="transferencia">
                 <i class="fa-solid fa-money-check-alt"></i>
                 <span>Transferência Bancária</span>
             </label>
             <label for="credit_card">
-                <input type="radio" id="credit_card" name="payment" value="Cartão de Crédito/Débito">
+                <input type="radio" id="credit_card" name="pagamento" value="Cartão de Crédito/Débito">
+                <input type="hidden" name="cartao">
                 <i class="fa-regular fa-credit-card"></i>
-                <span>Cartão de crédito/Débito</span>
+                <span>Cartão de Crédito/Débito</span>
             </label>
         </div>
-        <a href="/resumo_aluguer"><button type="submit">Prosseguir para Resumo</button></a>
+        <a href="/resumo_aluguer"><button type="submit">Prosseguir</button></a>
     </div>
     </form>
 </body>

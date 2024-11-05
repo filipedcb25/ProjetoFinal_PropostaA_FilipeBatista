@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+        <style>
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+        width: 50%;
+        margin-bottom: 15px;
+        padding: 13px;
+        box-sizing: border-box;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-top: 50px;
+            color: #333;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #555;
+        }
+        h3 {
+            font-size: 18px;
+            margin: 15px;
+            color: #555;
+        }
+
+        button {
+            padding: 8px 12px;
+            font-size: 15px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .logo {
+            margin-top: 50px;
+            max-width: 736px;
+            height: 127px;
+            width: 127px;
+        }
+    </style>
+
+
+</head>
+<body>
+ <img src="https://i.pinimg.com/736x/84/e7/b3/84e7b33d4ead8cfab4f230f95ba27ae1.jpg" class="logo" alt="Luxury Wheels Logo">
+    <h2>Login</h2>
+    <form action="{{ url_for('login') }}" method="POST">
+        <label for="email">Email:</label>
+        <br>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="password">Password:</label>
+        <br>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">Login</button>
+        <h3><a href="/registar_user">Ainda não tem conta? Registe-se aqui.</a></h3>
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>

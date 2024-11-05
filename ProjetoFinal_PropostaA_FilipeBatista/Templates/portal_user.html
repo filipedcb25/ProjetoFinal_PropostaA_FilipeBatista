@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>As Minhas Reservas</title>
+    <style>
+        body {
+            font-family: 'Crimson Text' , serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #B2BEB5;
+            color: #fff;
+            padding: 10px 20px;
+            align-items: center;
+            justify-content: space-between;
+            display: flex;
+            padding:10px;
+            position: relative;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            border-radius: 5px;
+            margin-top: 10px;
+            width: 150px;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown:hover .dropbtn {
+            background-color: #0056b3;
+        }
+        .dropbtn {
+            background-color: #BEBEBE;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .header span {
+            margin-right: 20px;
+        }
+        .container {
+            padding: 20px;
+        }
+        .reservas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .reserva-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 300px;
+            position: relative;
+        }
+        .reserva-item:hover {
+            background-color: #f0f0f0;
+        }
+        .reserva-detalhes {
+            display: none;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #ddd;
+        }
+        .reserva-toggle:checked + .reserva-toggle-label + .reserva-detalhes {
+            display: block;
+        }
+        .reserva-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .reserva-toggle {
+            display: none;
+        }
+        .reserva-toggle-label {
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .editar-btn{
+            background-color: #BEBEBE;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .reserva-item:hover .atualizar-btn{
+            background-color: #0056b3;
+        }
+        .cancelar-btn{
+            background-color: #BEBEBE;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .reserva-item:hover .cancelar-btn{
+            background-color: #0056b3;
+        }
+        .logo {
+            width: 110px;
+            height: 110px;
+            margin-left: 0;
+        }
+        .nova-reserva-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            margin-left: -20px;
+        }
+
+        .nova-reserva-btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .nova-reserva-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <span class="logo d-none d-sm-inline">
+       <img src="https://i.pinimg.com/736x/84/e7/b3/84e7b33d4ead8cfab4f230f95ba27ae1.jpg" class="logo" alt="Luxury Wheels Logo">
+    </span>
+    <div class="dropdown">
+            <button class="dropbtn">{{ primeiro_nome }} {{ apelido }}</button>
+            <div class="dropdown-conteudo">
+                <a href="{{ url_for('logout') }}">Logout|</a>
+                <a href="/veiculos_alugados">Veículos Disponíveis</a>
+            </div>
+        </div>
+</div>
+<div class="container">
+    <h1>As Minhas Reservas</h1>
+
+    <div class="nova-reserva-container">
+        <form action="{{ url_for('nova_reserva') }}"  method="POST">
+            <button type="submit" class="nova-reserva-btn">+ Nova Reserva</button>
+        </form>
+    </div>
+
+    <div class="reservas">
+        {% for reserva in reservas %}
+        <div class="reserva-item">
+            <input type="checkbox" id="toggle-{{loop.index}}" class="reserva-toggle">
+            <label for="toggle-{{loop.index}}" class="reserva-toggle-label">
+                Veículo Reservado <br> {{ reserva.marca }} {{ reserva.modelo }} (Referência: {{ reserva.veiculo_id }})
+                <br>
+            </label>
+            <div class="reserva-detalhes">
+                <p><strong>Data de Início:</strong>{{ reserva.data_inicio }}</p>
+                <p><strong>Data de Fim:</strong>{{ reserva.data_final }}</p>
+                <p><strong>Método de Pagamento:</strong>{{ reserva.pagamento }}</p>
+                <p><strong>Valor a Pagar:</strong>{{ reserva.valor_pagar }}</p>
+                <br>
+                <form method="POST" action="{{ url_for('editar_reserva') }}">
+                    <input type="hidden" name="reserva_id" value="{{ reserva.reserva_id }}">
+                    <input type="hidden" name="choice" value="editar">
+                    <button type="submit" class="editar-btn">Alterar Reserva</button>
+                </form>
+                <br>
+                <form method="POST" action="{{ url_for('cancelar_reserva') }}">
+                    <input type="hidden" name="reserva_id" value="{{ reserva.reserva_id }}">
+                    <input type="hidden" name="choice" value="cancelar">
+                    <button type="submit" class="cancelar-btn">Cancelar Reserva</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

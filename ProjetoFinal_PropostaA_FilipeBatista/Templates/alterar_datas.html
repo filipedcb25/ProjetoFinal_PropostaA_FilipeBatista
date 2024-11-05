@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alterar Datas</title>
+    <style>
+        body {
+            font-family: 'Crimson Text', serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #555;
+        }
+
+        form {
+            margin: 0 auto;
+            max-width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="date"], button {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Vamos alterar as datas previamente selecionadas</h2>
+    <form action="/atualizar_reserva" method="post">
+        <input type="hidden" name="veiculo_id" value="{{ veiculo_id }}">
+
+        <label for="data_inicio">Data de Início:</label>
+        <input type="date" id="data_inicio" name="data_inicio" required>
+
+        <label for="data_final">Data de Fim:</label>
+        <input type="date" id="data_final" name="data_final" required>
+
+        <button type="submit">Confirmar Datas</button>
+    </form>
+</body>
+</html>

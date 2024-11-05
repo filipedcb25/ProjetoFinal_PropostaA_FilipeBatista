@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Informações do Cartão</title>
+    <style>
+        body {
+            font-family: 'Crimson Text', serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .card-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 350px;
+            border-radius: 8px;
+            padding: 30px 20px;
+            background: #fff;
+            box-shadow: 10px 10px 15px #eaeaea, -10px -10px 15px #eaeaea;
+        }
+
+        .form-header {
+            margin-bottom: 20px;
+        }
+
+        .form-header h4 {
+            font-size: 22px;
+            color: #333;
+            margin: 0;
+        }
+
+        .corpo-form input[type="text"],
+        .corpo-form select {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .campo-data {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .def-mes, .def-ano {
+            width: 48%;
+        }
+
+        .verificar-cartao {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .cvv-input input[type="text"] {
+            width: 70px;
+        }
+
+        .cvv-detalhes p {
+            font-size: 12px;
+            color: #888;
+            margin: 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px 0;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .continuar-btn {
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-box">
+        <form class="cartao-credito" action="/cartao_credito" method="POST">
+            <div class="form-header">
+                <h4 class="title">Detalhes do Cartão de Crédito/Débito</h4>
+            </div>
+
+            <div class="corpo-form">
+                <!-- Número do Cartão -->
+                <input type="text" class="numero-cartao" name="numero_id" placeholder="Número do Cartão">
+                <!-- Nome do Cartão -->
+                <input type="text" class="nome-cartao" name="nome_cartao" placeholder="Nome Completo">
+
+                <!-- Datas -->
+                <div class="campo-data">
+                    <div class="def-mes">
+                        <select name="mes">
+                            <option value="01">Janeiro</option>
+                            <option value="02">Fevereiro</option>
+                            <option value="03">Março</option>
+                            <option value="04">Abril</option>
+                            <option value="05">Maio</option>
+                            <option value="06">Junho</option>
+                            <option value="07">Julho</option>
+                            <option value="08">Agosto</option>
+                            <option value="09">Setembro</option>
+                            <option value="10">Outubro</option>
+                            <option value="11">Novembro</option>
+                            <option value="12">Dezembro</option>
+                        </select>
+                    </div>
+                    <div class="def-ano">
+                        <select name="ano">
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                            <option value="2031">2031</option>
+                            <option value="2032">2032</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Campo de Verificação do cartão -->
+                <div class="verificar-cartao">
+                    <div class="cvv-input">
+                        <input type="text" placeholder="cvv" name="cvv">
+                    </div>
+                    <div class="cvv-detalhes">
+                        <p>3 dígitos encontrados na faixa de assinatura</p>
+                    </div>
+                </div>
+
+                <button type="submit" class="continuar-btn">Guardar Cartão</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Resumo do Aluguer</title>
+    <title>Resumo da Alteração do Aluguer</title>
 <style>
     body {
         font-family: 'Crimson Text', serif;
@@ -14,7 +14,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         width: 415px;
-        height: 480px;
+        height: 380px;
         border-radius: 5px;
         padding: 40px 30px;
         background: #fff;
@@ -85,18 +85,15 @@
 <body>
 <div class="card-box">
     <div class="card-title">
-        <h3>Resumo do Aluguer</h3>
+        <h3>Resumo da Alteração do Aluguer</h3>
         <hr>
         <div class="card">
-            <p>E-mail: <span class="espaco">{{ email }}</span></p>
-            <p>Veículo Selecionado:<span class="espaco">{{ marca }} {{ modelo }}</span></p>
-            <p>Data de Início do Aluguer: <span class="espaco">{{ data_inicio }}</span></p>
-            <p>Data do Fim do Aluguer: <span class="espaco">{{ data_final }}</span></p>
-            <p>Método de pagamento: <span class="espaco">{{ pagamento }}</span></p>
-            <p>Valor a Pagar: <span class="espaco">{{ valor_pagar }}</span>€</p>
+            <p>Nova Data de Início do Aluguer: <span class="espaco">{{ data_inicio }}</span></p>
+            <p>Nova Data do Fim do Aluguer: <span class="espaco">{{ data_final }}</span></p>
+            <p>Novo Valor a Pagar: <span class="espaco">{{ valor_pagar }}</span>€</p>
             <div class="vertical-center">
-                <form action="{{ url_for('confirmar_reserva') }}" method="post">
-                    <button type="submit">Confirmar Reserva</button>
+                <form action="{{ url_for('editar_sucesso') }}" method="post">
+                    <button type="submit">Confirmar Alteração</button>
                 </form>
             </div>
         </div>

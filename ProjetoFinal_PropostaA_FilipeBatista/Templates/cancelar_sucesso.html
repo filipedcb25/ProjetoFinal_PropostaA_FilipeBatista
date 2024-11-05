@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Aluguer feito com sucesso</title>
+    <title>Cancelamento com sucesso</title>
     <style>
         body {
             font-family: 'Crimson Text', serif;
@@ -10,39 +10,27 @@
             background-color: #f4f4f4;
         }
 
-        h1 {
-            font-size: 48px;
-            margin-top: 50px;
-            color: #333;
-        }
-
         h2 {
-            font-size: 30px;
+            font-size: 24px;
             margin: 20px 0;
             color: #555;
         }
         h3 {
             font-size: 18px;
-            margin: 15px;
+            margin: 20px 0;
             color: #555;
         }
 
-        a {
-            text-decoration: none;
-            color: #007BFF;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
         .logo {
             margin-top: 50px;
             max-width: 736px;
             height: 127px;
             width: 127px;
+            padding: 10px;
         }
+
         button {
-            padding: 7px 10px;
+            padding: 8px 12px;
             font-size: 15px;
             color: white;
             background-color: #007BFF;
@@ -50,15 +38,19 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
         button:hover {
             background-color: #0056b3;
         }
-    </style>
+</style>
 </head>
 <body>
+<body>
 <img src="https://i.pinimg.com/736x/84/e7/b3/84e7b33d4ead8cfab4f230f95ba27ae1.jpg" class="logo" alt="Luxury Wheels Logo">
-    <h1>O seu aluguer foi realizado com sucesso</h1>
-    <h2>Obrigado pela sua confiança!</h2>
-<a href="{{ url_for ( 'portal_user' )  }}"><button>Consultar as minhas Reservas</button></a>
+<form action="{{ url_for ('cancelar_sucesso') }}" method="POST">
+    <h1>O seu aluguer foi cancelado com sucesso!</h1>
+<a href="{{ url_for ( 'portal_user' )  }}"><button>Voltar ao Meu Perfil</button></a>
+</form>
+</body>
 </body>
 </html>

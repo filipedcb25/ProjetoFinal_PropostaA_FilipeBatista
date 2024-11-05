@@ -12,6 +12,7 @@
  <style>
      input[type="text"],
      input[type="email"],
+     input[type="password"],
      select {
         width: 120%;
         margin-bottom: 15px;
@@ -93,7 +94,7 @@
                name = "primeiro_nome"
         placeholder="Introduza o seu primeiro nome: " required>
         <br>
-        <br>
+
         <label for="apelido">
             Último nome:
             <br>
@@ -103,7 +104,7 @@
                 name = "apelido"
         placeholder="Introduza o seu apelido: " required>
         <br>
-        <br>
+
         <label for="email">
             Email:
             <br>
@@ -113,10 +114,19 @@
                 name="email"
         placeholder="Introduza o seu e-mail:" required>
         <br>
+
+        <label for="password">
+            Password
+            <br>
+        </label>
+        <input type="password"
+               id="password"
+               name="password"
+               placeholder="Introduza uma password:" required>
         <br>
         <div class = "wrap">
         <button type="submit" onclick="solve()">
-            Avançar
+            Registar
         </button>
         </div>
     </form>
